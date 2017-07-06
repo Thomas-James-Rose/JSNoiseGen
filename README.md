@@ -6,11 +6,11 @@ A JavaScript library for generating noise maps.
 
 * Diamond-Square Algorithm
 * Value Noise
+* Perlin Noise
 * Worley Noise
 
 ## Future Implementation
 
-* Perlin Noise
 * Fractional Brownian Motion (fBm)
 
 ## Github Pages
