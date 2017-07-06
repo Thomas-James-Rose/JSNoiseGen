@@ -1,0 +1,27 @@
+main {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+main div {
+    flex: 1 1 auto;
+    margin: auto;
+    margin-top: 0;
+}
+
+
+
+.heightmap-wrapper {
+    max-width: 512px;
+    min-height: 512px;
+    margin-right: 2em;
+}
+
+.options-wrapper {
+    border: solid #000;
+    max-width: 512px; 
+    padding: 1em;
+    
+}

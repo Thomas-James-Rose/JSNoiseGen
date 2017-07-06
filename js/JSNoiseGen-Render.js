@@ -19,8 +19,9 @@ class Color {
     }
 }
 
-function load() {
-    var nm = new NoiseMap(512, 512);
+JSNoiseGen.render = function (dimension, type) {
+    console.log("Dimension = " + dimension);
+    var nm = new NoiseMap(parseInt(dimension), parseInt(dimension));
 
     // Set up the canvas
     console.log("Getting canvas context and resizing...")
@@ -30,17 +31,29 @@ function load() {
     ctx = c.getContext("2d");
     console.log("The canvas context has been successfully set up.")
 
-    // === Add noise generation here === //
-    //nm = JSNoiseGen.worley(nm, 1, 20);
-    //nm = JSNoiseGen.diamondSquare(nm, 0.1, 1.2);
-    nm = JSNoiseGen.value(nm, 16);
-    // === Noise generation ends here === //
+    // Make some noise
+    switch(type) {
+        case 'perlin':
+            nm = JSNoiseGen.perlin(nm, 20);
+            break;
+        case 'value':
+            nm = JSNoiseGen.value(nm, 32);
+            break;
+        case 'worley':
+            nm = JSNoiseGen.worley(nm, 1, 20);
+            break;
+        case 'diamond-square':
+            nm = JSNoiseGen.diamondSquare(nm, 1.4);
+            break;   
+    }
 
     // Grayscale Render
     for (var x = 0; x < nm.grid.length; x++) {
         for (var y = 0; y < nm.grid[0].length; y++) {
             var c = new Color(Math.round(nm.grid[x][y] * 255), Math.round(nm.grid[x][y] * 255), Math.round(nm.grid[x][y] * 255));
             ctx.fillStyle = c.toString();
+            //if(Math.round(nm.grid[x][y] * 255) < 0) ctx.fillStyle = new Color(255, 0, 0); // too low
+            //if(Math.round(nm.grid[x][y] * 255) > 255) ctx.fillStyle = new Color(0, 0, 255); // too high
             ctx.fillRect(x, y, 1, 1);
         }
     }
@@ -50,7 +63,7 @@ function load() {
       for (var y = 0; y < nm.grid[0].length; y++) {
         var sky = new Color(135, 206, 235);
         var cloud = new Color(255, 255, 255);
-        var t = nm.grid[x][y]/255;
+        var t = nm.grid[x][y];
         var finalColor = Color.lerp(sky, cloud, t);
         ctx.fillStyle = finalColor.toString();
         ctx.fillRect(x, y, 1, 1);
@@ -60,4 +73,4 @@ function load() {
     console.log('Map Loaded.');
 }
 
-document.addEventListener('DOMContentLoaded', load);
+//document.addEventListener('DOMContentLoaded', load);
